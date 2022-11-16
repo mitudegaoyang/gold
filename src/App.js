@@ -19,12 +19,15 @@ import { Wcontainer, Wline } from '@alicloud/cloud-charts';
 import moment from 'moment';
 import axios from 'axios';
 import './App.less';
+import logo from './logo.png';
+import codeEnum from './data/codeEnum.json';
+import typeEnum from './data/typeEnum.json';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 const { Title } = Typography;
 
-const initValues = { code: 'JO_42638', date: [moment().subtract(7, 'days'), moment()] };
+const initValues = { brand: 'cb', type: 'gold', date: [moment().subtract(1, 'month'), moment()] };
 let options = {
   // stack: true,
   // // size: 30,
@@ -96,6 +99,7 @@ const App = () => {
   const [form] = Form.useForm();
   const [initialValues, setInitialValues] = useState({});
   const [data, setData] = useState(null);
+  const [brand, setBrand] = useState('cb');
   const [canRender, setCanRander] = useState(false);
   let goldList = [
     {
@@ -111,6 +115,7 @@ const App = () => {
   const getData = (param) => {
     let startDate = moment(param.date[0]).format('YYYY-MM-DD');
     let endDate = moment(param.date[1]).format('YYYY-MM-DD');
+    param.code = codeEnum[param.brand]['codes'][param.type];
     let url = `https://api.jijinhao.com/quoteCenter/history.htm?style=3&needField=128,129,70&pageSize=999&currentPage=1&code=${param.code}&startDate=${startDate}&endDate=${endDate}`;
 
     axios.get(url).then((res) => {
@@ -143,6 +148,11 @@ const App = () => {
     });
   };
 
+  const onChange = (values) => {
+    setBrand(values.brand);
+    form.setFieldValue('type', Object.keys(codeEnum[values.brand].codes)[0]);
+  };
+
   const onSubmit = async (values) => {
     getData(values);
   };
@@ -166,11 +176,7 @@ const App = () => {
     <>
       <section style={{ textAlign: 'center', marginTop: 48, marginBottom: 40 }}>
         <Space align="start">
-          <img
-            style={{ width: 40, height: 40 }}
-            src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-            alt="Ant Design"
-          />
+          <img style={{ width: 40, height: 40 }} src={logo} alt="Ant Design" />
           <Title level={2} style={{ marginBottom: 0 }}>
             贵金属走势
           </Title>
@@ -179,28 +185,68 @@ const App = () => {
       <Divider style={{ marginBottom: 60 }}>Form</Divider>
       <Form
         form={form}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 8 }}
+        // labelCol={{ span: 4 }}
+        // wrapperCol={{ span: 20 }}
         initialValues={initialValues}
+        onValuesChange={(changedValues, allValues) => {
+          if (Object.keys(changedValues)[0] === 'brand') {
+            onChange(allValues);
+          }
+        }}
         onFinish={onSubmit}
       >
-        <Form.Item label="品牌" name="code" rules={[{ required: true, message: '请选择品牌!' }]}>
-          <Select style={{ width: 192 }}>
-            <Option value="JO_42638">菜百</Option>
-            <Option value="JO_42660">周大福</Option>
-            <Option value="JO_42657">老凤祥</Option>
-            <Option value="JO_42653">周六福</Option>
-            <Option value="JO_42625">周生生</Option>
-            <Option value="JO_42646">六福珠宝</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="起止日期"
-          name="date"
-          rules={[{ required: true, message: '请输入起止日期!' }]}
-        >
-          <RangePicker />
-        </Form.Item>
+        <Row gutter={20}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
+            <Form.Item
+              label="品牌"
+              name="brand"
+              rules={[{ required: true, message: '请选择品牌!' }]}
+            >
+              <Select style={{ width: 192 }}>
+                {Object.keys(codeEnum).map((item, index) => {
+                  if (index > 6) {
+                    return null;
+                  }
+                  return (
+                    <Option value={item} key={item}>
+                      {codeEnum[item].name}
+                    </Option>
+                  );
+                })}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
+            <Form.Item
+              label="类型"
+              name="type"
+              rules={[{ required: true, message: '请选择类型!' }]}
+            >
+              <Select style={{ width: 192 }}>
+                {Object.keys(codeEnum[brand].codes).map((item, index) => {
+                  return (
+                    <Option value={item} key={item}>
+                      {typeEnum[item]}
+                    </Option>
+                  );
+                })}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
+            <Form.Item
+              label="起止日期"
+              name="date"
+              rules={[{ required: true, message: '请输入起止日期!' }]}
+            >
+              <RangePicker
+                disabledDate={(current) => {
+                  return current && current > moment();
+                }}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
         {/* <Form.Item label="数字输入框">
           <InputNumber min={1} max={10} defaultValue={3} />
           <span className="ant-form-text"> 台机器</span>
@@ -221,19 +267,16 @@ const App = () => {
         <Form.Item wrapperCol={{ span: 8, offset: 8 }}>
           <Space>
             <Button type="primary" htmlType="submit">
-              Submit
+              搜索
             </Button>
-            <Button onClick={onReset}>Cancel</Button>
+            <Button onClick={onReset}>重置</Button>
           </Space>
         </Form.Item>
       </Form>
-      <Wcontainer style={{ padding: '0 8px' }} className="eduNumDistribute">
+      <Wcontainer style={{ padding: '0 20px' }} className="eduNumDistribute">
         <Row gutter={10}>
-          <Col span={22}>
-            <Wline height="215" config={options} data={data} />
-          </Col>
-          <Col span={2} style={{ display: 'flex', alignItems: 'end' }}>
-            <span style={{ fontSize: '14px', color: '#575D6C' }}>数量</span>
+          <Col span={22} offset={1}>
+            <Wline height="300" config={options} data={data} />
           </Col>
         </Row>
       </Wcontainer>
