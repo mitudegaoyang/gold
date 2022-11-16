@@ -4,7 +4,7 @@ import {
   Select,
   DatePicker,
   Button,
-  // InputNumber,
+  InputNumber,
   // Switch,
   // Slider,
   // Rate,
@@ -28,77 +28,12 @@ const { Option } = Select;
 const { Title } = Typography;
 
 const initValues = { brand: 'cb', type: 'gold', date: [moment().subtract(1, 'month'), moment()] };
-let options = {
-  // stack: true,
-  // // size: 30,
-  // column: false,
-  // legend: false,
-  // padding: [10, 20, 30, 85],
-  // legend: {
-  //   position: 'right',
-  //   align: 'center',
-  // },
-  colors: ['#438BF7', '#00C5D0', '#F8B821', '#F2627B'],
-  xAxis: {
-    type: 'time',
-    mask: 'YYYY-MM-DD',
-    customConfig: {
-      label: {
-        style: {
-          fontSize: 14,
-          fill: '#575D6C'
-        }
-      }
-    }
-  },
-  yAxis: {
-    customConfig: {
-      // grid: null,
-      line: {
-        style: {
-          stroke: '#E4E7ED'
-        }
-      },
-      label: {
-        style: {
-          fontSize: 14,
-          fill: '#575D6C'
-        }
-      }
-    }
-  },
-  tooltip: {
-    reactContent: (title, data) => {
-      return (
-        <div className="customTooltip">
-          <div className="toolTitle">{title}</div>
-          <Space direction="vertical">
-            {data.map((item) => {
-              return (
-                <div key={item?.name} className="toolContent">
-                  <div>
-                    <Badge color={item.color} text={item.name} />：{item.value}
-                  </div>
-                  <div className="toolRatio">
-                    {item?.data?.extra[0] ? `${item?.data?.extra[0]}` : '-'}
-                  </div>
-                </div>
-              );
-            })}
-          </Space>
-        </div>
-      );
-    }
-  }
-  // label: {
-  //   'position': 'middle'
-  // }
-};
 
 const App = () => {
   const [form] = Form.useForm();
   const [initialValues, setInitialValues] = useState({});
   const [data, setData] = useState(null);
+  const [price, setPrice] = useState(null);
   const [brand, setBrand] = useState('cb');
   const [canRender, setCanRander] = useState(false);
   let goldList = [
@@ -107,6 +42,88 @@ const App = () => {
       data: []
     }
   ];
+
+  let options = {
+    // stack: true,
+    // // size: 30,
+    // column: false,
+    // legend: false,
+    // padding: [10, 20, 30, 85],
+    // legend: {
+    //   position: 'right',
+    //   align: 'center',
+    // },
+    colors: ['#438BF7', '#00C5D0', '#F8B821', '#F2627B'],
+    xAxis: {
+      type: 'time',
+      mask: 'YYYY-MM-DD',
+      customConfig: {
+        label: {
+          style: {
+            fontSize: 14,
+            fill: '#575D6C'
+          }
+        }
+      }
+    },
+    yAxis: {
+      customConfig: {
+        // grid: null,
+        line: {
+          style: {
+            stroke: '#E4E7ED'
+          }
+        },
+        label: {
+          style: {
+            fontSize: 14,
+            fill: '#575D6C'
+          }
+        }
+      }
+    },
+    tooltip: {
+      reactContent: (title, data) => {
+        return (
+          <div className="customTooltip">
+            <div className="toolTitle">{title}</div>
+            <Space direction="vertical">
+              {data.map((item) => {
+                return (
+                  <div key={item?.name} className="toolContent">
+                    <div>
+                      <Badge color={item.color} text={item.name} />：{item.value}
+                    </div>
+                    <div className="toolRatio">
+                      {item?.data?.extra[0] ? `${item?.data?.extra[0]}` : '-'}
+                    </div>
+                  </div>
+                );
+              })}
+            </Space>
+          </div>
+        );
+      }
+    },
+    guide: {
+      line: {
+        top: false,
+        status: 'normal',
+        text: {
+          title: '买入价',
+          position: 'start',
+          // align: 'center',
+          align: 'start'
+        },
+        axis: 'y',
+        value: price
+      }
+    }
+    // label: {
+    //   'position': 'middle'
+    // }
+  };
+
   // 金投网
   // http://quote.cngold.org/gjs/swhj_cb.html
   // 新浪财经
@@ -192,6 +209,7 @@ const App = () => {
           if (Object.keys(changedValues)[0] === 'brand') {
             onChange(allValues);
           }
+          setPrice(allValues.price);
         }}
         onFinish={onSubmit}
       >
@@ -246,6 +264,11 @@ const App = () => {
               />
             </Form.Item>
           </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
+            <Form.Item label="买入价格" name="price">
+              <InputNumber min={1} max={1000} />
+            </Form.Item>
+          </Col>
         </Row>
         {/* <Form.Item label="数字输入框">
           <InputNumber min={1} max={10} defaultValue={3} />
@@ -276,7 +299,7 @@ const App = () => {
       <Wcontainer style={{ padding: '0 20px' }} className="eduNumDistribute">
         <Row gutter={10}>
           <Col span={22} offset={1}>
-            <Wline height="300" config={options} data={data} />
+            <Wline height="300" config={options} data={data} key={price} />
           </Col>
         </Row>
       </Wcontainer>
