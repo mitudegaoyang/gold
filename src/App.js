@@ -5,6 +5,7 @@ import {
   DatePicker,
   Button,
   InputNumber,
+  Radio,
   // Switch,
   // Slider,
   // Rate,
@@ -132,8 +133,9 @@ const App = () => {
   const getData = (param) => {
     let startDate = moment(param.date[0]).format('YYYY-MM-DD');
     let endDate = moment(param.date[1]).format('YYYY-MM-DD');
-    param.code = codeEnum[param.brand]['codes'][param.type];
-    let url = `https://api.jijinhao.com/quoteCenter/history.htm?style=3&needField=128,129,70&pageSize=999&currentPage=1&code=${param.code}&startDate=${startDate}&endDate=${endDate}`;
+    let pageSize = moment(param.date[1]).diff(moment(param.date[0]), 'days');
+    let code = codeEnum[param.brand]['codes'][param.type];
+    let url = `https://api.jijinhao.com/quoteCenter/history.htm?style=3&needField=128,129,70&currentPage=1&pageSize=${pageSize}&code=${code}&startDate=${startDate}&endDate=${endDate}`;
 
     axios.get(url).then((res) => {
       let str = res.data;
@@ -168,6 +170,18 @@ const App = () => {
   const onChange = (values) => {
     setBrand(values.brand);
     form.setFieldValue('type', Object.keys(codeEnum[values.brand].codes)[0]);
+  };
+
+  const clearTime = () => {
+    form.setFieldValue('time', '');
+  };
+
+  const changeDate = (values) => {
+    if (values.time !== 'half') {
+      form.setFieldValue('date', [moment().subtract(1, values.time), moment()]);
+    } else {
+      form.setFieldValue('date', [moment().subtract(6, 'month'), moment()]);
+    }
   };
 
   const onSubmit = async (values) => {
@@ -209,6 +223,12 @@ const App = () => {
           if (Object.keys(changedValues)[0] === 'brand') {
             onChange(allValues);
           }
+          if (Object.keys(changedValues)[0] === 'date') {
+            clearTime();
+          }
+          if (Object.keys(changedValues)[0] === 'time') {
+            changeDate(allValues);
+          }
           setPrice(allValues.price);
         }}
         onFinish={onSubmit}
@@ -220,11 +240,15 @@ const App = () => {
               name="brand"
               rules={[{ required: true, message: '请选择品牌!' }]}
             >
-              <Select style={{ width: 192 }}>
-                {Object.keys(codeEnum).map((item, index) => {
-                  if (index > 6) {
-                    return null;
-                  }
+              <Select
+                style={{ width: 192 }}
+                showSearch
+                optionFilterProp="children"
+                filterOption={(input, option) => {
+                  return (option?.children ?? '').toLowerCase().includes(input.toLowerCase());
+                }}
+              >
+                {Object.keys(codeEnum).map((item) => {
                   return (
                     <Option value={item} key={item}>
                       {codeEnum[item].name}
@@ -269,20 +293,24 @@ const App = () => {
               <InputNumber min={1} max={1000} />
             </Form.Item>
           </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
+            <Form.Item label="时间维度" name="time">
+              <Radio.Group defaultValue="month">
+                <Radio.Button value="week">近一周</Radio.Button>
+                <Radio.Button value="month">近一月</Radio.Button>
+                <Radio.Button value="quarter">近一季</Radio.Button>
+                <Radio.Button value="half">近半年</Radio.Button>
+                <Radio.Button value="year">近一年</Radio.Button>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
         </Row>
-        {/* <Form.Item label="数字输入框">
-          <InputNumber min={1} max={10} defaultValue={3} />
-          <span className="ant-form-text"> 台机器</span>
-          <a href="https://ant.design">链接文字</a>
-        </Form.Item>
+        {/*
         <Form.Item label="开关">
           <Switch defaultChecked />
         </Form.Item>
         <Form.Item label="滑动输入条">
           <Slider defaultValue={70} />
-        </Form.Item>
-        <Form.Item label="日期范围选择框">
-          <DatePicker.RangePicker />
         </Form.Item>
         <Form.Item label="评分">
           <Rate defaultValue={5} />

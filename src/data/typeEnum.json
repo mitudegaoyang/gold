@@ -12,5 +12,16 @@
     "pt999": "铂金999",
     "ag": "基础银价",
     "jewelrybars": "饰品金条",
-    "ornaments": "摆件"
+    "ornaments": "摆件",
+    "goldBase": "基础金价",
+    "goldRetail": "零售金价",
+    "goldRecovery": "回收金价",
+    "barsag": "银条",
+    "barsinvest": "投资金条",
+    "barsaginvest": "投资银条",
+    "barscraft": "工艺金条",
+    "agRecovery": "回收银价",
+    "jewelrygold999": "足金饰品",
+    "gold3d": "3D硬金",
+    "jewelryhang": "精品挂件"
 }

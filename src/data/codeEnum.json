@@ -77,361 +77,219 @@
     "lm": {
         "name": "老庙",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_42634",
+            "pt": "JO_42635",
+            "bars": "JO_42637",
+            "gold999": "JO_42636"
         }
     },
     "chj": {
         "name": "潮宏基",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52670",
+            "pt": "JO_61954"
         }
     },
     "zds": {
         "name": "周大生",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52678",
+            "pt": "JO_52677"
         }
     },
     "yyjd": {
         "name": "亚一金店",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52672",
+            "pt": "JO_52671"
         }
     },
     "bqyl": {
         "name": "宝庆银楼",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52674",
+            "pt": "JO_52673"
         }
     },
     "tyjd": {
         "name": "太阳金店",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52676",
+            "pt": "JO_52675"
         }
     },
     "qljd": {
         "name": "齐鲁金店",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52680",
+            "pt": "JO_52679"
         }
     },
     "zghj": {
         "name": "中国黄金",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "goldBase": "JO_52683",
+            "goldRetail": "JO_52684",
+            "goldRecovery": "JO_52685"
         }
     },
     "gse": {
         "name": "高赛尔",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "bars": "JO_52681",
+            "barsag": "JO_52682"
         }
     },
     "qxzx": {
         "name": "千禧之星",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52686",
+            "pt": "JO_54155"
         }
     },
     "jmzb": {
         "name": "吉盟珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52689",
+            "pt": "JO_54372"
         }
     },
     "dxjd": {
         "name": "东祥金店",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52692",
+            "pt": "JO_52693"
         }
     },
     "chjd": {
         "name": "萃华金店",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52694",
+            "pt": "JO_52695"
         }
     },
     "bthj": {
         "name": "百泰黄金",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52696",
+            "bars": "JO_61908"
         }
     },
     "jxzb": {
         "name": "金象珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52698"
         }
     },
     "czjd": {
         "name": "常州金店",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52699",
+            "pt": "JO_52700"
         }
     },
     "yzjd": {
         "name": "扬州金店",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52702",
+            "pt": "JO_52701"
         }
     },
     "jhzb": {
         "name": "嘉华珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52703"
         }
     },
     "ftzb": {
         "name": "福泰珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52705",
+            "pt": "JO_52704"
         }
     },
     "chzb": {
         "name": "城隍珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52707",
+            "pt": "JO_52706"
         }
     },
     "xgdzb": {
         "name": "星光达珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52709",
+            "pt": "JO_52708"
         }
     },
     "jlss": {
         "name": "金兰首饰",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_52711",
+            "pt": "JO_52712"
         }
     },
     "jyj": {
         "name": "金银街",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "barsinvest": "JO_61906",
+            "barscraft": "JO_61905",
+            "gold999": "JO_61428",
+            "barsaginvest": "JO_61429",
+            "goldRecovery": "JO_61435",
+            "agRecovery": "JO_61434"
         }
     },
     "dbjdzb": {
         "name": "多边金都珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "jewelrygold999": "JO_63849",
+            "gold3d": "JO_63851",
+            "jewelryhang": "JO_63850",
+            "pt990": "JO_63852"
         }
     },
     "fyzb": {
         "name": "富艺珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_92438",
+            "barsinvest": "JO_92441",
+            "pt950": "JO_92439",
+            "pt990": "JO_92440"
         }
     },
     "tyys": {
         "name": "天乙银饰",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "ag": "JO_95167"
         }
     },
     "sewyq": {
         "name": "斯尔沃银器",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "ag": "JO_95168"
         }
     },
     "zcgd": {
         "name": "中钞国鼎",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "ag": "JO_95169"
         }
     },
     "jqf": {
         "name": "金巧福珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_292800",
+            "pt": "JO_292801",
+            "ornaments": "JO_292802"
         }
     },
     "lyzb": {
         "name": "莱茵珠宝",
         "codes": {
-            "gold": "",
-            "pt": "",
-            "bars": "",
-            "jewelry": "",
-            "jewelryhk": "",
-            "pthk": "",
-            "barshk": ""
+            "gold": "JO_321446",
+            "pt": "JO_321448",
+            "bars": "JO_321450"
         }
     }
 }
