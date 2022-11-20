@@ -1,0 +1,30 @@
+[
+    {
+        "label": "近一周",
+        "value": "week"
+    },
+    {
+        "label": "近一月",
+        "value": "month"
+    },
+    {
+        "label": "近一季",
+        "value": "quarter"
+    },
+    {
+        "label": "近半年",
+        "value": "half"
+    },
+    {
+        "label": "近一年",
+        "value": "year"
+    },
+    {
+        "label": "近五年",
+        "value": "5year"
+    },
+    {
+        "label": "近十年",
+        "value": "10year"
+    }
+]

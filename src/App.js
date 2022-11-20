@@ -5,7 +5,7 @@ import {
   DatePicker,
   Button,
   InputNumber,
-  Radio,
+  // Radio,
   // Switch,
   // Slider,
   // Rate,
@@ -23,12 +23,18 @@ import './App.less';
 import logo from './logo.png';
 import codeEnum from './data/codeEnum.json';
 import typeEnum from './data/typeEnum.json';
+import timeEnum from './data/timeEnum.json';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 const { Title } = Typography;
 
-const initValues = { brand: 'cb', type: 'gold', date: [moment().subtract(1, 'month'), moment()] };
+const initValues = {
+  brand: 'cb',
+  type: 'gold',
+  time: 'month',
+  date: [moment().subtract(1, 'month'), moment()]
+};
 
 const App = () => {
   const [form] = Form.useForm();
@@ -130,23 +136,19 @@ const App = () => {
   // 新浪财经
   // https://vip.stock.finance.sina.com.cn/q//view/vGold_Matter_History.php?page=1&pp=5&pz=11&start=2022-01-01&end=2022-12-31
 
-  const getData = (param) => {
-    let startDate = moment(param.date[0]).format('YYYY-MM-DD');
-    let endDate = moment(param.date[1]).format('YYYY-MM-DD');
-    let pageSize = moment(param.date[1]).diff(moment(param.date[0]), 'days');
-    let code = codeEnum[param.brand]['codes'][param.type];
-    let url = `https://api.jijinhao.com/quoteCenter/history.htm?style=3&needField=128,129,70&currentPage=1&pageSize=${pageSize}&code=${code}&startDate=${startDate}&endDate=${endDate}`;
-
-    axios.get(url).then((res) => {
+  const getData = (params) => {
+    let { currentPage, pageSize, code, startDate, endDate } = params;
+    let url = `https://api.jijinhao.com/quoteCenter/history.htm?style=3&needField=128,129,70&currentPage=${currentPage}&pageSize=${pageSize}&code=${code}&startDate=${startDate}&endDate=${endDate}`;
+    return axios.get(url).then((res) => {
       let str = res.data;
-      let data = new Function('return ' + str.split('=')[1])();
-      // console.log(data);
-      goldList[0].name = data.productName;
-      goldList[0].data = formarData(data).map((item) => {
-        return [item.time, item.price, item.priceDis];
-      });
-      setData(goldList);
-      // console.log(JSON.stringify(goldList));
+      return new Function('return ' + str.split('=')[1])();
+      // goldList[0].name = data.productName;
+      // let dataNext = formarData(data).map((item) => {
+      //   return [item.time, item.price, item.priceDis];
+      // });
+      // goldList[0].data = [...goldList[0].data, ...dataNext];
+      // setData(goldList);
+      // console.log(goldList);
     });
   };
 
@@ -177,15 +179,43 @@ const App = () => {
   };
 
   const changeDate = (values) => {
-    if (values.time !== 'half') {
-      form.setFieldValue('date', [moment().subtract(1, values.time), moment()]);
-    } else {
+    if (values.time === 'half') {
       form.setFieldValue('date', [moment().subtract(6, 'month'), moment()]);
+    } else if (values.time === '5year') {
+      form.setFieldValue('date', [moment().subtract(5, 'year'), moment()]);
+    } else if (values.time === '10year') {
+      form.setFieldValue('date', [moment().subtract(10, 'year'), moment()]);
+    } else {
+      form.setFieldValue('date', [moment().subtract(1, values.time), moment()]);
     }
   };
 
   const onSubmit = async (values) => {
-    getData(values);
+    let params = {
+      startDate: moment(values.date[0]).format('YYYY-MM-DD'),
+      endDate: moment(values.date[1]).format('YYYY-MM-DD'),
+      pageSize: moment(values.date[1]).diff(moment(values.date[0]), 'days'),
+      code: codeEnum[values.brand]['codes'][values.type],
+      currentPage: 1
+    };
+    let p = [];
+    let num = Math.ceil(params.pageSize / 400);
+    params.pageSize = 400;
+    for (let i = 1; i <= num; i++) {
+      params.currentPage = i;
+      p.push(getData(params));
+    }
+    let data = await Promise.all(p);
+    data.map((items, index) => {
+      goldList[0].name = items.productName;
+      let dataNext = formarData(items).map((item) => {
+        return [item.time, item.price, item.priceDis];
+      });
+      goldList[0].data = [...goldList[0].data, ...dataNext];
+      if (num === index + 1) {
+        setData(goldList);
+      }
+    });
   };
 
   const onReset = () => {
@@ -197,6 +227,7 @@ const App = () => {
     setInitialValues(initValues);
     onSubmit(initValues);
     setCanRander(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!canRender) {
@@ -289,23 +320,44 @@ const App = () => {
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
+            <Form.Item label="时间维度" name="time">
+              <Select
+                style={{ width: 192 }}
+                showSearch
+                optionFilterProp="children"
+                filterOption={(input, option) => {
+                  return (option?.children ?? '').toLowerCase().includes(input.toLowerCase());
+                }}
+              >
+                {timeEnum.map((item) => {
+                  return (
+                    <Option value={item.value} key={item.value}>
+                      {item.label}
+                    </Option>
+                  );
+                })}
+              </Select>
+              {/* */}
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
             <Form.Item label="买入价格" name="price">
               <InputNumber min={1} max={1000} />
             </Form.Item>
           </Col>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={6}>
-            <Form.Item label="时间维度" name="time">
-              <Radio.Group defaultValue="month">
-                <Radio.Button value="week">近一周</Radio.Button>
-                <Radio.Button value="month">近一月</Radio.Button>
-                <Radio.Button value="quarter">近一季</Radio.Button>
-                <Radio.Button value="half">近半年</Radio.Button>
-                <Radio.Button value="year">近一年</Radio.Button>
-              </Radio.Group>
-            </Form.Item>
-          </Col>
         </Row>
         {/*
+        <Form.Item label="时间维度">
+          <Radio.Group defaultValue="month">
+            <Radio.Button value="week">近一周</Radio.Button>
+            <Radio.Button value="month">近一月</Radio.Button>
+            <Radio.Button value="quarter">近一季</Radio.Button>
+            <Radio.Button value="half">近半年</Radio.Button>
+            <Radio.Button value="year">近一年</Radio.Button>
+            <Radio.Button value="5year">近五年</Radio.Button>
+            <Radio.Button value="10year">近十年</Radio.Button>
+          </Radio.Group> 
+        </Form.Item>
         <Form.Item label="开关">
           <Switch defaultChecked />
         </Form.Item>
