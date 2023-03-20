@@ -136,20 +136,37 @@ const App = () => {
   // 新浪财经
   // https://vip.stock.finance.sina.com.cn/q//view/vGold_Matter_History.php?page=1&pp=5&pz=11&start=2022-01-01&end=2022-12-31
 
-  const getData = (params) => {
+  // const getData = (params) => {
+  //   let { currentPage, pageSize, code, startDate, endDate } = params;
+  //   let url = `https://api.jijinhao.com/quoteCenter/history.htm?style=3&needField=128,129,70&currentPage=${currentPage}&pageSize=${pageSize}&code=${code}&startDate=${startDate}&endDate=${endDate}`;
+  //   return axios.get(url).then((res) => {
+  //     let str = res.data;
+  //     return new Function('return ' + str.split('=')[1])();
+  //     // goldList[0].name = data.productName;
+  //     // let dataNext = formarData(data).map((item) => {
+  //     //   return [item.time, item.price, item.priceDis];
+  //     // });
+  //     // goldList[0].data = [...goldList[0].data, ...dataNext];
+  //     // setData(goldList);
+  //     // console.log(goldList);
+  //   });
+  // };
+
+  // 方法二：
+  const getData = async (params) => {
     let { currentPage, pageSize, code, startDate, endDate } = params;
     let url = `https://api.jijinhao.com/quoteCenter/history.htm?style=3&needField=128,129,70&currentPage=${currentPage}&pageSize=${pageSize}&code=${code}&startDate=${startDate}&endDate=${endDate}`;
-    return axios.get(url).then((res) => {
-      let str = res.data;
-      return new Function('return ' + str.split('=')[1])();
-      // goldList[0].name = data.productName;
-      // let dataNext = formarData(data).map((item) => {
-      //   return [item.time, item.price, item.priceDis];
-      // });
-      // goldList[0].data = [...goldList[0].data, ...dataNext];
-      // setData(goldList);
-      // console.log(goldList);
-    });
+    try {
+      const response = await fetch(url, {
+        referrerPolicy: 'no-referrer',
+        mode: 'cors',
+        credentials: 'omit'
+      });
+      const data = await response.text();
+      return new Function('return ' + data.split('=')[1])();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const formarData = (data) => {
